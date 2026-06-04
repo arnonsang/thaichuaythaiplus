@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#1a7f5a" />
+<title>ไทยช่วยไทยพลัส (ตัวช่วยคำนวณสิทธิ)</title>
+<style>
+  :root {
+    /* OKLCH color system */
+    --gov:            oklch(0.54 0.108 156);
+    --gov-d:          oklch(0.43 0.095 156);
+    --gov-l:          oklch(0.65 0.11 156);
+    --user:           oklch(0.52 0.19 258);
+    --user-d:         oklch(0.40 0.17 258);
+    --bg:             oklch(0.972 0.007 156);
+    --card:           oklch(1.0 0 0);
+    --ink:            oklch(0.20 0.03 156);
+    --muted:          oklch(0.50 0.04 156);
+    --line:           oklch(0.93 0.012 156);
+    --line-subtle:    oklch(0.96 0.007 156);
+    --warn:           oklch(0.52 0.13 65);
+    --warn-bg:        oklch(0.97 0.04 65);
+    --warn-line:      oklch(0.88 0.07 65);
+    --danger:         oklch(0.50 0.15 35);
+    --danger-bg:      oklch(0.97 0.04 35);
+    --danger-line:    oklch(0.88 0.08 35);
+    --gov-surface:    oklch(0.95 0.025 156);
+    --user-surface:   oklch(0.95 0.018 258);
+    --indigo:         oklch(0.41 0.19 290);
+    --indigo-surface: oklch(0.95 0.02 290);
+
+    --r-sm: 10px;
+    --r-md: 14px;
+    --r-lg: 16px;
+    --shadow: 0 1px 3px oklch(0.2 0.03 156 / 0.07), 0 3px 10px oklch(0.2 0.03 156 / 0.05);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; }
+
+  body {
+    font-family: "Sukhumvit Set", "IBM Plex Sans Thai", "Noto Sans Thai",
+                 system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right)
+             calc(env(safe-area-inset-bottom) + 32px);
+  }
+
+  .wrap { max-width: 480px; margin: 0 auto; padding: 0 16px; }
+
+  /* ── Header ─────────────────────────────────────── */
+  header { padding: 20px 0 14px; }
+
+  .brand { display: flex; align-items: center; gap: 12px; }
+
+  .logo {
+    width: 44px; height: 44px; border-radius: 12px; flex: none;
+    background: var(--gov);
+    display: grid; place-items: center;
+    color: #fff; font-weight: 900; font-size: 22px;
+  }
+
+  .brand-text h1 {
+    font-size: 1.1rem; margin: 0; font-weight: 800;
+    letter-spacing: -0.02em; line-height: 1.25;
+  }
+  .brand-text .sub {
+    font-size: 0.775rem; color: var(--muted); margin-top: 2px; font-weight: 600;
+  }
+
+  .badges { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 14px; }
+  .badge {
+    font-size: 0.75rem; font-weight: 700; padding: 5px 11px; border-radius: 999px;
+    background: var(--gov-surface); color: var(--gov-d);
+  }
+  .badge.month { background: var(--indigo-surface); color: var(--indigo); }
+
+  .banner {
+    margin-top: 12px; padding: 10px 13px; border-radius: var(--r-md);
+    font-size: 0.875rem; font-weight: 600;
+    background: var(--danger-bg); color: var(--danger);
+    border: 1px solid var(--danger-line);
+    display: none;
+  }
+  .banner.show { display: block; }
+
+  /* ── Cards ───────────────────────────────────────── */
+  .card {
+    background: var(--card);
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow);
+    padding: 20px;
+    margin-bottom: 10px;
+  }
+
+  .card > h2 {
+    font-size: 0.82rem; font-weight: 800; color: var(--muted);
+    margin: 0 0 16px; letter-spacing: 0.005em;
+  }
+
+  /* ── Amount input ────────────────────────────────── */
+  label.lbl {
+    display: block; font-size: 0.775rem; color: var(--muted);
+    font-weight: 700; margin-bottom: 8px;
+  }
+
+  .amount-row { position: relative; }
+
+  .baht {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    font-size: 1.4rem; font-weight: 800; color: var(--muted);
+    pointer-events: none; line-height: 1;
+  }
+
+  #amount {
+    width: 100%; font-size: 2.25rem; font-weight: 800;
+    padding: 14px 14px 14px 40px;
+    border: 2px solid var(--line); border-radius: var(--r-md);
+    background: var(--bg); color: var(--ink);
+    outline: none; transition: border-color 0.15s ease;
+    caret-color: var(--gov);
+  }
+  #amount:focus { border-color: var(--gov); background: var(--card); }
+
+  .chips { display: flex; gap: 7px; flex-wrap: wrap; margin-top: 10px; }
+
+  .chip {
+    flex: 1 1 auto; min-width: 60px; min-height: 44px;
+    border: 1.5px solid var(--line); background: var(--card); color: var(--ink);
+    font-weight: 700; font-size: 0.875rem; padding: 9px 8px;
+    border-radius: var(--r-sm); cursor: pointer;
+    transition: border-color 0.12s ease, background 0.12s ease, transform 0.1s ease;
+  }
+  .chip:hover { border-color: oklch(0.78 0.03 156); background: var(--bg); }
+  .chip:active { transform: scale(0.96); }
+  .chip.full {
+    border-color: oklch(0.84 0.055 156);
+    background: var(--gov-surface); color: var(--gov-d);
+  }
+  .chip:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* ── Result boxes ────────────────────────────────── */
+  .result { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 16px; }
+
+  .res-box { border-radius: var(--r-md); padding: 14px 12px; text-align: center; }
+  .res-box .t { font-size: 0.75rem; font-weight: 700; }
+  .res-box .v {
+    font-size: 2rem; font-weight: 800; margin-top: 4px;
+    line-height: 1; letter-spacing: -0.03em;
+  }
+  .res-gov  { background: var(--gov-surface);  color: var(--gov-d); }
+  .res-user { background: var(--user-surface); color: var(--user-d); }
+
+  .note {
+    margin-top: 10px; font-size: 0.82rem; font-weight: 600; color: var(--warn);
+    background: var(--warn-bg); border: 1px solid var(--warn-line);
+    border-radius: var(--r-sm); padding: 9px 12px; display: none;
+  }
+  .note.show { display: block; }
+
+  .hint { margin-top: 8px; font-size: 0.8rem; color: var(--muted); }
+  .hint b { color: var(--gov-d); }
+
+  /* ── Pay button ──────────────────────────────────── */
+  .pay {
+    width: 100%; margin-top: 14px; border: none;
+    border-radius: var(--r-md); cursor: pointer;
+    background: var(--gov); color: #fff;
+    font-size: 1.05rem; font-weight: 800; padding: 16px;
+    transition: background 0.12s ease, transform 0.1s ease;
+  }
+  .pay:hover:not(:disabled) { background: var(--gov-d); }
+  .pay:active:not(:disabled) { transform: translateY(1px); }
+  .pay:disabled { background: oklch(0.72 0.03 156); cursor: not-allowed; }
+
+  /* Focus rings */
+  .chip:focus-visible, .btn:focus-visible, .pay:focus-visible,
+  .del:focus-visible, .flip-btn:focus-visible, .install:focus-visible {
+    outline: 2px solid var(--gov); outline-offset: 2px;
+  }
+
+  /* ── Progress meters ─────────────────────────────── */
+  .meter { margin-bottom: 14px; }
+  .meter:last-of-type { margin-bottom: 0; }
+
+  .meter .top {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-size: 0.82rem; margin-bottom: 7px;
+  }
+  .meter .top .name { font-weight: 700; color: var(--ink); }
+  .meter .top .num  { color: var(--muted); font-weight: 600; font-size: 0.775rem; }
+  .meter .top .num b { color: var(--ink); font-weight: 800; display: inline-block; }
+
+  .track {
+    height: 9px; background: oklch(0.93 0.012 156);
+    border-radius: 999px; overflow: hidden;
+  }
+
+  .fill {
+    height: 100%; width: 0; border-radius: 999px;
+    background: var(--gov);
+    transition: width 0.65s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  .fill.mid   { background: oklch(0.70 0.13 72); }
+  .fill.low   { background: oklch(0.62 0.15 42); }
+  .fill.empty { background: oklch(0.52 0.16 30); }
+
+  .meter .top .num b.pop { animation: pop 0.45s ease; }
+
+  @keyframes pop {
+    0%   { transform: scale(1); }
+    35%  { transform: scale(1.28); color: var(--gov); }
+    100% { transform: scale(1); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fill { transition: none !important; }
+    .meter .top .num b { animation: none !important; }
+  }
+
+  /* ── Flip card ───────────────────────────────────── */
+  .flip-card { position: relative; perspective: 1600px; margin-bottom: 10px; }
+
+  .flip-inner {
+    display: grid;
+    transition: transform 0.55s cubic-bezier(0.4, 0.1, 0.2, 1);
+    transform-style: preserve-3d;
+  }
+  .flip-card.flipped .flip-inner { transform: rotateY(180deg); }
+
+  .flip-face {
+    grid-area: 1 / 1;
+    background: var(--card); border-radius: var(--r-lg); box-shadow: var(--shadow);
+    padding: 20px;
+    backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  }
+  .flip-back { transform: rotateY(180deg); }
+
+  .flip-face > h2 {
+    font-size: 0.82rem; font-weight: 800; color: var(--muted);
+    margin: 0 0 16px; letter-spacing: 0.005em;
+    padding-right: 120px;
+  }
+
+  .flip-btn {
+    position: absolute; top: 14px; right: 14px; z-index: 3;
+    border: 1.5px solid var(--line); background: var(--card); color: var(--gov-d);
+    font-weight: 700; font-size: 0.75rem; padding: 6px 12px; border-radius: 999px;
+    cursor: pointer; min-height: 34px;
+    display: inline-flex; align-items: center; gap: 5px;
+    transition: background 0.12s ease, border-color 0.12s ease;
+  }
+  .flip-btn:hover { background: var(--gov-surface); border-color: oklch(0.82 0.05 156); }
+  .flip-btn:active { transform: scale(0.96); }
+
+  .track.split { display: flex; }
+  .track.split .fill { flex: 0 0 auto; border-radius: 0; }
+  .fill.capfill-gov  { background: var(--gov); }
+  .fill.capfill-user { background: var(--user); }
+
+  .flip-back .num b { color: var(--user-d); }
+  .cap-split { font-size: 0.75rem; color: var(--muted); margin-top: 5px; }
+  .cap-split .g { color: var(--gov-d); font-weight: 700; }
+  .cap-split .u { color: var(--user-d); font-weight: 700; }
+  .cap-foot { margin-top: 6px; font-size: 0.75rem; color: var(--muted); }
+
+  @media (prefers-reduced-motion: reduce) { .flip-inner { transition: none !important; } }
+
+  /* ── Pacing callout ──────────────────────────────── */
+  .pace {
+    display: none; border-radius: var(--r-sm); padding: 10px 12px;
+    font-size: 0.82rem; font-weight: 600; margin-top: 14px; line-height: 1.7;
+    text-align: center;
+  }
+  .pace.show { display: block; }
+  .pace.info   { background: var(--indigo-surface); color: var(--indigo); }
+  .pace.warn   { background: var(--warn-bg);   color: var(--warn); }
+  .pace.urgent { background: var(--danger-bg); color: var(--danger); }
+  .pace b { font-weight: 800; }
+
+  /* ── History ─────────────────────────────────────── */
+  .hist-day { margin-bottom: 16px; }
+  .hist-day:last-child { margin-bottom: 0; }
+
+  .hist-head {
+    display: flex; justify-content: space-between;
+    font-size: 0.75rem; font-weight: 700; color: var(--muted);
+    margin-bottom: 4px; padding-bottom: 7px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 0; border-bottom: 1px solid var(--line-subtle);
+  }
+  .row:last-child { border-bottom: none; }
+
+  .row .time  { font-size: 0.75rem; color: var(--muted); width: 42px; flex: none; font-weight: 600; }
+  .row .amt   { font-weight: 800; width: 72px; flex: none; font-size: 0.9rem; }
+  .row .split { font-size: 0.75rem; color: var(--muted); flex: 1; line-height: 1.6; }
+  .row .split .g { color: var(--gov-d); font-weight: 700; }
+  .row .split .u { color: var(--user-d); font-weight: 700; }
+
+  .del {
+    border: none; background: var(--danger-bg); color: var(--danger);
+    font-weight: 700; font-size: 0.75rem; padding: 7px 10px;
+    border-radius: var(--r-sm); cursor: pointer; flex: none;
+    min-height: 36px; display: inline-flex; align-items: center;
+    transition: background 0.12s ease;
+  }
+  .del:hover  { background: oklch(0.94 0.06 35); }
+  .del:active { transform: scale(0.96); }
+
+  .empty-state {
+    text-align: center; color: var(--muted);
+    font-size: 0.875rem; padding: 24px 0; font-weight: 600;
+  }
+
+  /* ── Backup buttons ──────────────────────────────── */
+  .btn-row { display: flex; gap: 8px; }
+
+  .btn {
+    flex: 1; border: 1.5px solid var(--line); background: var(--card); color: var(--ink);
+    font-weight: 700; font-size: 0.875rem; padding: 11px 12px;
+    border-radius: var(--r-sm); cursor: pointer; text-align: center;
+    min-height: 44px; display: inline-flex; align-items: center; justify-content: center;
+    transition: background 0.12s ease, border-color 0.12s ease;
+  }
+  .btn:hover  { background: var(--bg); }
+  .btn:active { transform: scale(0.98); }
+  .btn.ghost-danger { color: var(--danger); border-color: var(--danger-line); }
+  .btn.ghost-danger:hover { background: var(--danger-bg); }
+
+  /* ── Footer ──────────────────────────────────────── */
+  footer {
+    text-align: center; font-size: 0.75rem; color: var(--muted);
+    padding: 12px 6px 0; line-height: 1.8;
+  }
+
+  footer .install {
+    display: none; margin: 8px auto 6px;
+    background: var(--ink); color: #fff; border: none;
+    font-weight: 700; padding: 10px 20px; border-radius: 999px;
+    cursor: pointer; font-size: 0.875rem;
+    transition: background 0.12s ease;
+  }
+  footer .install:hover  { background: var(--gov-d); }
+  footer .install.show   { display: inline-block; }
+
+  .disclaimer { margin-top: 6px; font-size: 0.7rem; color: var(--muted); line-height: 1.7; }
+  .credit { margin-top: 10px; font-size: 0.78rem; color: var(--muted); }
+  .credit a { color: var(--gov-d); font-weight: 700; text-decoration: none; }
+  .credit a:hover { text-decoration: underline; }
+
+  /* ── Toast ───────────────────────────────────────── */
+  #toast {
+    position: fixed; left: 50%; bottom: 28px;
+    transform: translateX(-50%) translateY(12px);
+    background: var(--ink); color: #fff;
+    font-weight: 700; font-size: 0.875rem; padding: 11px 20px; border-radius: 999px;
+    box-shadow: 0 8px 24px oklch(0 0 0 / 0.2);
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 50; max-width: 90vw; text-align: center;
+  }
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <div class="logo">฿</div>
+      <div class="brand-text">
+        <h1>ไทยช่วยไทยพลัส</h1>
+        <div class="sub">ตัวช่วยคำนวณสิทธิ รัฐช่วยจ่าย 60% · คุณจ่าย 40%</div>
+      </div>
+    </div>
+    <div class="badges">
+      <span class="badge" id="campaignBadge">โครงการ 1 มิ.ย.–30 ก.ย. 69</span>
+      <span class="badge month" id="monthBadge">เดือนนี้</span>
+    </div>
+    <div class="banner" id="banner"></div>
+  </header>
+
+  <!-- INPUT + RESULT -->
+  <section class="card">
+    <label class="lbl" for="amount">ยอดที่ต้องจ่ายทั้งหมด (บาท)</label>
+    <div class="amount-row">
+      <span class="baht">฿</span>
+      <input id="amount" type="text" inputmode="decimal" placeholder="0" autocomplete="off" />
+    </div>
+    <div class="chips" id="chips">
+      <button class="chip" data-amt="50">฿50</button>
+      <button class="chip" data-amt="100">฿100</button>
+      <button class="chip" data-amt="200">฿200</button>
+      <button class="chip full" id="chipFull" data-amt="333.33">ใช้เต็มวันนี้</button>
+    </div>
+
+    <div class="result">
+      <div class="res-box res-gov">
+        <div class="t">รัฐช่วยจ่าย</div>
+        <div class="v" id="govVal">฿0</div>
+      </div>
+      <div class="res-box res-user">
+        <div class="t">คุณจ่าย</div>
+        <div class="v" id="userVal">฿0</div>
+      </div>
+    </div>
+
+    <div class="note" id="capNote"></div>
+    <div class="hint" id="fullHint"></div>
+
+    <button class="pay" id="payBtn" disabled>ยืนยันการจ่าย</button>
+  </section>
+
+  <!-- BUDGET (flippable: gov subsidy left <-> spend capacity left) -->
+  <section class="flip-card" id="budgetCard">
+    <button class="flip-btn" id="flipBtn" type="button" aria-label="สลับมุมมอง">
+      <span id="flipLabel">ดูยอดที่ซื้อได้</span> ⇄
+    </button>
+    <div class="flip-inner">
+      <!-- FRONT: government subsidy remaining -->
+      <div class="flip-face flip-front">
+        <h2>สิทธิรัฐคงเหลือ</h2>
+        <div class="meter">
+          <div class="top">
+            <span class="name">เหลือวันนี้</span>
+            <span class="num"><b id="dRemain">฿200</b> / ฿200</span>
+          </div>
+          <div class="track"><div class="fill" id="dFill"></div></div>
+        </div>
+        <div class="meter">
+          <div class="top">
+            <span class="name">เหลือเดือนนี้</span>
+            <span class="num"><b id="mRemain">฿1,000</b> / ฿1,000</span>
+          </div>
+          <div class="track"><div class="fill" id="mFill"></div></div>
+        </div>
+        <div class="meter">
+          <div class="top">
+            <span class="name">เหลือทั้งโครงการ</span>
+            <span class="num"><b id="tRemain">฿4,000</b> / ฿4,000</span>
+          </div>
+          <div class="track"><div class="fill" id="tFill"></div></div>
+        </div>
+        <div class="pace" id="paceWarn"></div>
+      </div>
+      <!-- BACK: total spend that still earns subsidy -->
+      <div class="flip-face flip-back">
+        <h2>ยอดที่ยังซื้อได้ (รับสิทธิเต็ม)</h2>
+        <div class="meter">
+          <div class="top">
+            <span class="name">วันนี้</span>
+            <span class="num"><b id="dCap">฿333.33</b></span>
+          </div>
+          <div class="track split">
+            <div class="fill capfill-gov"  id="dCapG"></div>
+            <div class="fill capfill-user" id="dCapU"></div>
+          </div>
+          <div class="cap-split" id="dSplit"></div>
+        </div>
+        <div class="meter">
+          <div class="top">
+            <span class="name">เดือนนี้</span>
+            <span class="num"><b id="mCap">฿1,666.67</b></span>
+          </div>
+          <div class="track split">
+            <div class="fill capfill-gov"  id="mCapG"></div>
+            <div class="fill capfill-user" id="mCapU"></div>
+          </div>
+          <div class="cap-split" id="mSplit"></div>
+        </div>
+        <div class="meter">
+          <div class="top">
+            <span class="name">ทั้งโครงการ</span>
+            <span class="num"><b id="tCap">฿6,666.67</b></span>
+          </div>
+          <div class="track split">
+            <div class="fill capfill-gov"  id="tCapG"></div>
+            <div class="fill capfill-user" id="tCapU"></div>
+          </div>
+          <div class="cap-split" id="tSplit"></div>
+        </div>
+        <div class="cap-foot">จ่ายเกินยอดนี้ ส่วนเกินคุณจ่ายเองเต็มจำนวน</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HISTORY -->
+  <section class="card">
+    <h2>ประวัติการใช้สิทธิ</h2>
+    <div id="history"><div class="empty-state">ยังไม่มีรายการ เริ่มบันทึกการจ่ายได้เลย</div></div>
+  </section>
+
+  <!-- BACKUP -->
+  <section class="card">
+    <h2>สำรอง / กู้คืนข้อมูล</h2>
+    <p class="hint" style="margin-top:0">ข้อมูลเก็บไว้ในเครื่องนี้เท่านั้น แนะนำให้ส่งออกเก็บไว้ เผื่อเปลี่ยนเครื่องหรือล้างเบราว์เซอร์</p>
+    <div class="btn-row">
+      <button class="btn" id="exportBtn">ส่งออก JSON</button>
+      <button class="btn" id="importBtn">นำเข้า</button>
+    </div>
+    <div class="btn-row" style="margin-top:8px">
+      <button class="btn ghost-danger" id="clearBtn">ล้างข้อมูลทั้งหมด</button>
+    </div>
+    <input type="file" id="importFile" accept="application/json,.json" hidden />
+  </section>
+
+  <footer>
+    <button class="install" id="installBtn">ติดตั้งเป็นแอป</button>
+    <div>ใช้สิทธิได้ทุกวัน เวลา 06:00–23:00 น.</div>
+    <div class="disclaimer">
+      เครื่องมือช่วยคำนวณอย่างไม่เป็นทางการ · ยอดสิทธิจริงยึดตามแอปเป๋าตัง<br/>
+      ข้อมูลทั้งหมดบันทึกในอุปกรณ์ของคุณเท่านั้น ไม่มีการส่งออกไปที่ใด
+    </div>
+    <div class="credit">made with ❤️ by <a href="https://iamickdev.com" target="_blank" rel="noopener">arnonsang</a></div>
+  </footer>
+</div>
+
+<div id="toast"></div>
+
+<script>
+"use strict";
+(function(){
+  // ---------- Config ----------
+  const RATE = 0.60;                 // government share
+  const DAILY_GOV_CAP = 200;         // gov baht per day
+  const MONTHLY_GOV_CAP = 1000;      // gov baht per month
+  const TOTAL_GOV_CAP = 4000;        // gov baht over whole campaign
+  const CAMPAIGN_START = "2026-06-01";
+  const CAMPAIGN_END   = "2026-09-30";
+  const DB_NAME = "thaichuaythai-plus";
+  const STORE = "transactions";
+
+  const THM = ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."];
+
+  // ---------- Helpers ----------
+  const $ = (id) => document.getElementById(id);
+  const pad = (n) => String(n).padStart(2,"0");
+  const r2 = (n) => Math.round((n + Number.EPSILON) * 100) / 100;
+  const dateKeyOf = (d) => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+  const monthKeyFromDate = (s) => s.slice(0,7);
+  const fmtMoney = (n) => "฿" + new Intl.NumberFormat("th-TH",{minimumFractionDigits:(n%1?2:0),maximumFractionDigits:2}).format(n);
+
+  function thaiDate(dateKey){
+    const [y,m,dd] = dateKey.split("-").map(Number);
+    return `${dd} ${THM[m-1]} ${(y+543)%100}`;
+  }
+
+  // ---------- IndexedDB ----------
+  let db = null;
+  function openDB(){
+    return new Promise((resolve,reject)=>{
+      const req = indexedDB.open(DB_NAME, 1);
+      req.onupgradeneeded = (e)=>{
+        const d = e.target.result;
+        if(!d.objectStoreNames.contains(STORE)){
+          const os = d.createObjectStore(STORE,{keyPath:"id",autoIncrement:true});
+          os.createIndex("dateKey","dateKey",{unique:false});
+          os.createIndex("monthKey","monthKey",{unique:false});
+        }
+      };
+      req.onsuccess = ()=>{ db = req.result; resolve(db); };
+      req.onerror = ()=>reject(req.error);
+    });
+  }
+  function tx(mode){ return db.transaction(STORE,mode).objectStore(STORE); }
+  function dbGetAll(){
+    return new Promise((res,rej)=>{ const r = tx("readonly").getAll(); r.onsuccess=()=>res(r.result||[]); r.onerror=()=>rej(r.error); });
+  }
+  function dbAdd(rec){
+    return new Promise((res,rej)=>{ const r = tx("readwrite").add(rec); r.onsuccess=()=>res(r.result); r.onerror=()=>rej(r.error); });
+  }
+  function dbDelete(id){
+    return new Promise((res,rej)=>{ const r = tx("readwrite").delete(id); r.onsuccess=()=>res(); r.onerror=()=>rej(r.error); });
+  }
+  function dbClear(){
+    return new Promise((res,rej)=>{ const r = tx("readwrite").clear(); r.onsuccess=()=>res(); r.onerror=()=>rej(r.error); });
+  }
+
+  // ---------- State ----------
+  let records = [];           // all transactions
+  let used = {day:0, month:0, total:0};
+  const todayKey = dateKeyOf(new Date());
+  const monthKey = todayKey.slice(0,7);
+
+  function recompute(){
+    used = {day:0, month:0, total:0};
+    for(const rec of records){
+      used.total += rec.govPays;
+      if(rec.monthKey === monthKey) used.month += rec.govPays;
+      if(rec.dateKey === todayKey)  used.day   += rec.govPays;
+    }
+    used.day = r2(used.day); used.month = r2(used.month); used.total = r2(used.total);
+  }
+
+  // Government pays the min of: 60% of amount, and each remaining cap.
+  function calcGov(amount){
+    const dRemain = Math.max(0, DAILY_GOV_CAP   - used.day);
+    const mRemain = Math.max(0, MONTHLY_GOV_CAP - used.month);
+    const tRemain = Math.max(0, TOTAL_GOV_CAP   - used.total);
+    const gov = Math.max(0, Math.min(amount * RATE, dRemain, mRemain, tRemain));
+    return { gov: r2(gov), dRemain, mRemain, tRemain };
+  }
+
+  function parseAmount(){
+    const raw = ($("amount").value || "").replace(/[^0-9.]/g,"");
+    const v = parseFloat(raw);
+    return (isFinite(v) && v > 0) ? v : 0;
+  }
+
+  // ---------- Campaign window ----------
+  function campaignState(){
+    if(todayKey < CAMPAIGN_START) return "before";
+    if(todayKey > CAMPAIGN_END)   return "after";
+    return "active";
+  }
+  function daysLeftInCampaign(){
+    const end = new Date(CAMPAIGN_END+"T23:59:59");
+    return Math.max(0, Math.ceil((end - new Date())/86400000));
+  }
+
+  // ---------- Rendering ----------
+  let metersInit = false;
+  const lastRemain = {};
+
+  // Color tier by remaining %: green (>50) -> amber (25–50) -> orange (0–25) -> red (0).
+  function applyMeter(key, fillEl, remainEl, remain, cap){
+    const pct = Math.max(0, Math.min(100, (remain/cap)*100));
+    fillEl.style.width = pct + "%";
+    let cls = "fill";
+    if(remain <= 0) cls += " empty";
+    else if(pct <= 25) cls += " low";
+    else if(pct <= 50) cls += " mid";
+    fillEl.className = cls;
+    remainEl.textContent = fmtMoney(r2(remain));
+    // Pop the number when its value actually changes (not on first load).
+    if(metersInit && lastRemain[key] !== undefined && lastRemain[key] !== remain){
+      remainEl.classList.remove("pop"); void remainEl.offsetWidth; remainEl.classList.add("pop");
+    }
+    lastRemain[key] = remain;
+  }
+
+  function renderMeters(){
+    const sets = [
+      ["d", $("dFill"), $("dRemain"), DAILY_GOV_CAP   - used.day,   DAILY_GOV_CAP],
+      ["m", $("mFill"), $("mRemain"), MONTHLY_GOV_CAP - used.month, MONTHLY_GOV_CAP],
+      ["t", $("tFill"), $("tRemain"), TOTAL_GOV_CAP   - used.total, TOTAL_GOV_CAP],
+    ];
+    if(!metersInit){
+      // Init: start at 0 and animate up with a staggered cascade.
+      sets.forEach((s)=>{ s[1].style.width = "0%"; });
+      requestAnimationFrame(()=> requestAnimationFrame(()=>{
+        sets.forEach((s,i)=>{
+          s[1].style.transitionDelay = (i*0.12) + "s";
+          applyMeter(s[0], s[1], s[2], s[3], s[4]);
+          setTimeout(()=>{ s[1].style.transitionDelay = ""; }, 1000 + i*120);
+        });
+        metersInit = true;
+      }));
+    } else {
+      sets.forEach((s)=> applyMeter(s[0], s[1], s[2], s[3], s[4]));
+    }
+  }
+
+  function renderResult(){
+    const amount = parseAmount();
+    const { gov, dRemain, mRemain, tRemain } = calcGov(amount);
+    const user = r2(amount - gov);
+    $("govVal").textContent = fmtMoney(gov);
+    $("userVal").textContent = fmtMoney(user);
+
+    // cap note
+    const note = $("capNote");
+    if(amount > 0 && gov < r2(amount*RATE)){
+      let why = "ถึงเพดานสิทธิแล้ว ส่วนเกินคุณจ่ายเอง";
+      if(tRemain <= 0) why = "สิทธิทั้งโครงการหมดแล้ว ส่วนเกินคุณจ่ายเอง";
+      else if(mRemain <= 0) why = "สิทธิเดือนนี้หมดแล้ว รอเดือนหน้ารีเซ็ตใหม่";
+      else if(dRemain <= 0) why = "สิทธิวันนี้ครบ ฿200 แล้ว มาใหม่พรุ่งนี้ได้";
+      note.textContent = "⚠️ " + why;
+      note.classList.add("show");
+    } else {
+      note.classList.remove("show");
+    }
+
+    // full-day suggestion
+    const govRoom = Math.max(0, Math.min(DAILY_GOV_CAP-used.day, MONTHLY_GOV_CAP-used.month, TOTAL_GOV_CAP-used.total));
+    const suggestSpend = r2(govRoom / RATE);
+    const fullHint = $("fullHint");
+    const chipFull = $("chipFull");
+    if(govRoom > 0){
+      fullHint.innerHTML = `จ่าย <b>${fmtMoney(suggestSpend)}</b> วันนี้ เพื่อรับสิทธิรัฐเต็ม <b>${fmtMoney(govRoom)}</b> (คุณเติม ${fmtMoney(r2(suggestSpend-govRoom))})`;
+      chipFull.dataset.amt = suggestSpend;
+      chipFull.disabled = false;
+      chipFull.style.display = "";
+    } else {
+      fullHint.innerHTML = `วันนี้ใช้สิทธิรัฐครบแล้ว`;
+      chipFull.disabled = true;
+    }
+
+    // pay button
+    const canPay = amount > 0 && campaignState()==="active";
+    $("payBtn").disabled = !canPay;
+    $("payBtn").textContent = amount>0 ? `ยืนยันการจ่าย ${fmtMoney(amount)}` : "ยืนยันการจ่าย";
+  }
+
+  function renderHistory(){
+    const host = $("history");
+    if(records.length === 0){
+      host.innerHTML = `<div class="empty-state">ยังไม่มีรายการ เริ่มบันทึกการจ่ายได้เลย</div>`;
+      return;
+    }
+    // group by dateKey desc
+    const groups = {};
+    for(const r of records){ (groups[r.dateKey] = groups[r.dateKey] || []).push(r); }
+    const days = Object.keys(groups).sort().reverse();
+    let html = "";
+    for(const dk of days){
+      const list = groups[dk].sort((a,b)=> b.ts.localeCompare(a.ts));
+      const govSum = r2(list.reduce((s,r)=>s+r.govPays,0));
+      html += `<div class="hist-day"><div class="hist-head"><span>${thaiDate(dk)}${dk===todayKey?" (วันนี้)":""}</span><span>รัฐช่วย ${fmtMoney(govSum)}</span></div>`;
+      for(const r of list){
+        const t = new Date(r.ts);
+        html += `<div class="row">
+          <span class="time">${pad(t.getHours())}:${pad(t.getMinutes())}</span>
+          <span class="amt">${fmtMoney(r.amount)}</span>
+          <span class="split"><span class="g">รัฐ ${fmtMoney(r.govPays)}</span> · <span class="u">คุณ ${fmtMoney(r.userPays)}</span></span>
+          <button class="del" data-id="${r.id}">ลบ</button>
+        </div>`;
+      }
+      html += `</div>`;
+    }
+    host.innerHTML = html;
+    host.querySelectorAll(".del").forEach(btn=>{
+      btn.addEventListener("click", ()=> onDelete(Number(btn.dataset.id)));
+    });
+  }
+
+  function daysLeftInMonth(){
+    const now = new Date();
+    const lastDay = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate();
+    return lastDay - now.getDate() + 1; // include today
+  }
+
+  // "Use it or lose it": monthly subsidy does not roll over.
+  function renderPacing(){
+    const el = $("paceWarn");
+    if(campaignState() !== "active"){ el.className = "pace"; return; }
+    const monthRemain = r2(MONTHLY_GOV_CAP - used.month);
+    const totalRemain = r2(TOTAL_GOV_CAP - used.total);
+    if(monthRemain <= 0 || totalRemain <= 0){ el.className = "pace"; return; }
+
+    const daysLeft = daysLeftInMonth();
+    const govPerDayNeeded = monthRemain / daysLeft;
+    let cls, msg;
+
+    if(govPerDayNeeded <= DAILY_GOV_CAP){
+      // Achievable: spread evenly across remaining days.
+      const spendPerDay = Math.ceil(monthRemain / RATE / daysLeft); // round up to whole baht
+      cls = daysLeft <= 7 ? "warn" : "info";
+      msg = `เหลือสิทธิรัฐ <b>${fmtMoney(monthRemain)}</b> • อีก <b>${daysLeft} วัน</b><br>`
+          + `จ่ายวันละ <b>${fmtMoney(spendPerDay)}</b> รับครบ ไม่เสียสิทธิ`;
+    } else {
+      // Impossible to fully use even at the ฿200/day cap; some will expire.
+      const maxCapture = r2(daysLeft * DAILY_GOV_CAP);
+      const willLose = r2(monthRemain - maxCapture);
+      cls = "urgent";
+      msg = `เหลือ <b>${fmtMoney(monthRemain)}</b> แต่แค่ <b>${daysLeft} วัน</b><br>`
+          + `ใช้เต็มทุกวันก็ได้แค่ <b>${fmtMoney(maxCapture)}</b> เสีย <b>${fmtMoney(willLose)}</b>!`;
+    }
+    el.className = "pace show " + cls;
+    el.innerHTML = msg;
+  }
+
+  // Back of card: total spend that still earns subsidy = remainingGov / 0.6.
+  // Mirrors the front's bars (same fill %) in blue so both faces match height.
+  function capRow(remainGov, cap, valEl, splitEl, govFillEl, userFillEl){
+    const gov = Math.max(0, r2(remainGov));
+    const total = r2(gov / RATE);
+    const you = r2(total - gov);
+    valEl.textContent = fmtMoney(total);
+    splitEl.innerHTML = gov > 0
+      ? `รัฐ <span class="g">${fmtMoney(gov)}</span> + คุณเติม <span class="u">${fmtMoney(you)}</span>`
+      : `หมดสิทธิแล้ว ซื้อเพิ่มจ่ายเอง 100%`;
+    // Stacked vs the max total capacity: gov fills 60% of a full bar, you 40%.
+    const maxTotal = cap / RATE;
+    govFillEl.style.width  = Math.max(0, Math.min(100, (gov/maxTotal)*100)) + "%";
+    userFillEl.style.width = Math.max(0, Math.min(100, (you/maxTotal)*100)) + "%";
+  }
+  function renderCapacity(){
+    capRow(DAILY_GOV_CAP   - used.day,   DAILY_GOV_CAP,   $("dCap"), $("dSplit"), $("dCapG"), $("dCapU"));
+    capRow(MONTHLY_GOV_CAP - used.month, MONTHLY_GOV_CAP, $("mCap"), $("mSplit"), $("mCapG"), $("mCapU"));
+    capRow(TOTAL_GOV_CAP   - used.total, TOTAL_GOV_CAP,   $("tCap"), $("tSplit"), $("tCapG"), $("tCapU"));
+  }
+
+  function renderAll(){ recompute(); renderMeters(); renderPacing(); renderCapacity(); renderResult(); renderHistory(); }
+
+  // ---------- Actions ----------
+  let toastTimer = null;
+  function toast(msg){
+    const el = $("toast"); el.textContent = msg; el.classList.add("show");
+    clearTimeout(toastTimer); toastTimer = setTimeout(()=>el.classList.remove("show"), 2200);
+  }
+
+  async function onPay(){
+    const amount = parseAmount();
+    if(amount<=0 || campaignState()!=="active") return;
+    const { gov } = calcGov(amount);
+    const now = new Date();
+    const rec = {
+      ts: now.toISOString(),
+      dateKey: dateKeyOf(now),
+      monthKey: dateKeyOf(now).slice(0,7),
+      amount: r2(amount),
+      govPays: gov,
+      userPays: r2(amount - gov)
+    };
+    const id = await dbAdd(rec);
+    rec.id = id; records.push(rec);
+    $("amount").value = "";
+    renderAll();
+    toast(`บันทึกแล้ว • รัฐช่วย ${fmtMoney(gov)}`);
+  }
+
+  async function onDelete(id){
+    if(!confirm("ลบรายการนี้? สิทธิคงเหลือจะถูกคำนวณใหม่")) return;
+    await dbDelete(id);
+    records = records.filter(r=>r.id!==id);
+    renderAll();
+    toast("ลบรายการแล้ว");
+  }
+
+  function onExport(){
+    const data = { app:"thaichuaythai-plus", version:1, exportedAt:new Date().toISOString(), records };
+    const blob = new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = `thaichuaythai-${todayKey}.json`;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url), 1000);
+    toast("ส่งออกข้อมูลแล้ว");
+  }
+
+  async function onImport(file){
+    try{
+      const text = await file.text();
+      const data = JSON.parse(text);
+      const incoming = Array.isArray(data) ? data : (data.records || []);
+      if(!Array.isArray(incoming) || incoming.length===0){ toast("ไฟล์ไม่มีรายการ"); return; }
+      const mode = confirm("กด OK = แทนที่ข้อมูลทั้งหมด\nกด Cancel = เพิ่มต่อจากของเดิม");
+      if(mode){ await dbClear(); records = []; }
+      const existing = new Set(records.map(r=>r.ts+"|"+r.amount));
+      let added = 0;
+      for(const r of incoming){
+        if(typeof r.amount!=="number" || typeof r.govPays!=="number") continue;
+        const key = r.ts+"|"+r.amount;
+        if(!mode && existing.has(key)) continue;
+        const rec = {
+          ts: r.ts || new Date().toISOString(),
+          dateKey: r.dateKey || (r.ts? r.ts.slice(0,10) : todayKey),
+          monthKey: r.monthKey || (r.ts? r.ts.slice(0,7) : monthKey),
+          amount: r2(r.amount), govPays: r2(r.govPays),
+          userPays: typeof r.userPays==="number"? r2(r.userPays) : r2(r.amount-r.govPays)
+        };
+        const id = await dbAdd(rec); rec.id = id; records.push(rec); existing.add(key); added++;
+      }
+      renderAll();
+      toast(`นำเข้า ${added} รายการแล้ว`);
+    }catch(e){ alert("นำเข้าไม่สำเร็จ: ไฟล์ไม่ถูกต้อง"); }
+  }
+
+  async function onClearAll(){
+    if(!confirm("ล้างข้อมูลทั้งหมดในเครื่องนี้? ยกเลิกไม่ได้ แนะนำส่งออกก่อน")) return;
+    await dbClear(); records = []; renderAll(); toast("ล้างข้อมูลแล้ว");
+  }
+
+  // ---------- Header / campaign ----------
+  function renderHeader(){
+    const st = campaignState();
+    $("monthBadge").textContent = "เดือน " + THM[(new Date()).getMonth()];
+    const banner = $("banner");
+    if(st==="active"){
+      $("campaignBadge").textContent = `เหลืออีก ${daysLeftInCampaign()} วัน (ถึง 30 ก.ย. 69)`;
+      banner.classList.remove("show");
+    } else if(st==="before"){
+      $("campaignBadge").textContent = "โครงการเริ่ม 1 มิ.ย. 69";
+      banner.textContent = "⏳ โครงการยังไม่เริ่ม เริ่มใช้สิทธิได้ 1 มิถุนายน 2569";
+      banner.classList.add("show");
+    } else {
+      $("campaignBadge").textContent = "โครงการสิ้นสุดแล้ว";
+      banner.textContent = "🏁 โครงการสิ้นสุดแล้ว (30 ก.ย. 69) ดูประวัติย้อนหลังได้";
+      banner.classList.add("show");
+    }
+  }
+
+  // ---------- Wire up ----------
+  function bind(){
+    $("amount").addEventListener("input", renderResult);
+    $("chips").addEventListener("click",(e)=>{
+      const c = e.target.closest(".chip"); if(!c || c.disabled) return;
+      $("amount").value = c.dataset.amt; renderResult(); $("amount").focus();
+    });
+    $("payBtn").addEventListener("click", onPay);
+    $("exportBtn").addEventListener("click", onExport);
+    $("importBtn").addEventListener("click", ()=> $("importFile").click());
+    $("importFile").addEventListener("change",(e)=>{ if(e.target.files[0]){ onImport(e.target.files[0]); e.target.value=""; } });
+    $("clearBtn").addEventListener("click", onClearAll);
+    $("flipBtn").addEventListener("click", ()=>{
+      const flipped = $("budgetCard").classList.toggle("flipped");
+      $("flipLabel").textContent = flipped ? "ดูสิทธิคงเหลือ" : "ดูยอดที่ซื้อได้";
+    });
+  }
+
+  // ---------- PWA ----------
+  function setupPWA(){
+    const manifest = {
+      name:"ไทยช่วยไทยพลัส (ตัวช่วยคำนวณสิทธิ)", short_name:"ไทยช่วยไทยพลัส",
+      start_url:".", display:"standalone", background_color:"#f3f6f4", theme_color:"#1a7f5a",
+      icons:[{src:"data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512"><rect width="512" height="512" rx="96" fill="#1a7f5a"/><text x="50%" y="58%" font-size="300" text-anchor="middle" fill="#fff" font-family="sans-serif" font-weight="bold">฿</text></svg>'),sizes:"512x512",type:"image/svg+xml",purpose:"any"}]
+    };
+    const blob = new Blob([JSON.stringify(manifest)],{type:"application/json"});
+    const link = document.createElement("link"); link.rel="manifest"; link.href=URL.createObjectURL(blob);
+    document.head.appendChild(link);
+
+    if("serviceWorker" in navigator && location.protocol.startsWith("http")){
+      navigator.serviceWorker.register("sw.js").catch(()=>{});
+    }
+    let deferred=null;
+    window.addEventListener("beforeinstallprompt",(e)=>{ e.preventDefault(); deferred=e; $("installBtn").classList.add("show"); });
+    $("installBtn").addEventListener("click", async ()=>{
+      if(!deferred) return;
+      deferred.prompt(); await deferred.userChoice; deferred=null; $("installBtn").classList.remove("show");
+    });
+  }
+
+  // ---------- Init ----------
+  async function init(){
+    bind(); renderHeader(); setupPWA();
+    try{
+      await openDB();
+      records = await dbGetAll();
+    }catch(e){
+      alert("เบราว์เซอร์นี้ไม่รองรับการบันทึกข้อมูล (IndexedDB) โหมดส่วนตัว/ไม่ระบุตัวตนอาจปิดไว้");
+    }
+    renderAll();
+  }
+  init();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,362 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-04T00:00:00.000Z",
+  "title": "Design System: ไทยช่วยไทยพลัส",
+  "extensions": {
+    "colorMeta": {
+      "thai-green": {
+        "role": "primary",
+        "displayName": "Thai Green",
+        "canonical": "oklch(52.5% 0.115 162)",
+        "tonalRamp": [
+          "oklch(15% 0.06 162)",
+          "oklch(25% 0.09 162)",
+          "oklch(38% 0.10 162)",
+          "oklch(52.5% 0.115 162)",
+          "oklch(63% 0.105 162)",
+          "oklch(74% 0.08 162)",
+          "oklch(86% 0.045 162)",
+          "oklch(95% 0.015 162)"
+        ]
+      },
+      "thai-green-deep": {
+        "role": "primary",
+        "displayName": "Thai Green Deep",
+        "canonical": "oklch(38.5% 0.085 162)",
+        "tonalRamp": [
+          "oklch(12% 0.05 162)",
+          "oklch(22% 0.07 162)",
+          "oklch(32% 0.085 162)",
+          "oklch(38.5% 0.085 162)",
+          "oklch(50% 0.095 162)",
+          "oklch(64% 0.085 162)",
+          "oklch(80% 0.05 162)",
+          "oklch(94% 0.018 162)"
+        ]
+      },
+      "thai-green-bright": {
+        "role": "primary",
+        "displayName": "Thai Green Bright",
+        "canonical": "oklch(65% 0.13 162)",
+        "tonalRamp": [
+          "oklch(18% 0.07 162)",
+          "oklch(30% 0.10 162)",
+          "oklch(44% 0.12 162)",
+          "oklch(55% 0.13 162)",
+          "oklch(65% 0.13 162)",
+          "oklch(76% 0.10 162)",
+          "oklch(87% 0.06 162)",
+          "oklch(96% 0.02 162)"
+        ]
+      },
+      "trust-blue": {
+        "role": "secondary",
+        "displayName": "Trust Blue",
+        "canonical": "oklch(52% 0.245 265)",
+        "tonalRamp": [
+          "oklch(18% 0.10 265)",
+          "oklch(30% 0.16 265)",
+          "oklch(42% 0.22 265)",
+          "oklch(52% 0.245 265)",
+          "oklch(62% 0.23 265)",
+          "oklch(72% 0.19 265)",
+          "oklch(84% 0.12 265)",
+          "oklch(94% 0.04 265)"
+        ]
+      },
+      "page-mist": {
+        "role": "neutral",
+        "displayName": "Page Mist",
+        "canonical": "oklch(96.5% 0.008 162)",
+        "tonalRamp": [
+          "oklch(30% 0.005 162)",
+          "oklch(45% 0.006 162)",
+          "oklch(60% 0.007 162)",
+          "oklch(74% 0.008 162)",
+          "oklch(84% 0.008 162)",
+          "oklch(91% 0.008 162)",
+          "oklch(96.5% 0.008 162)",
+          "oklch(99% 0.003 162)"
+        ]
+      },
+      "surface-white": {
+        "role": "neutral",
+        "displayName": "Surface White",
+        "canonical": "oklch(100% 0 0)",
+        "tonalRamp": [
+          "oklch(20% 0 0)",
+          "oklch(35% 0 0)",
+          "oklch(50% 0 0)",
+          "oklch(65% 0 0)",
+          "oklch(78% 0 0)",
+          "oklch(88% 0 0)",
+          "oklch(95% 0 0)",
+          "oklch(100% 0 0)"
+        ]
+      },
+      "ink-forest": {
+        "role": "neutral",
+        "displayName": "Ink Forest",
+        "canonical": "oklch(16% 0.028 165)",
+        "tonalRamp": [
+          "oklch(10% 0.02 165)",
+          "oklch(16% 0.028 165)",
+          "oklch(25% 0.025 165)",
+          "oklch(38% 0.022 165)",
+          "oklch(53% 0.018 165)",
+          "oklch(68% 0.014 165)",
+          "oklch(82% 0.010 165)",
+          "oklch(94% 0.005 165)"
+        ]
+      },
+      "muted-sage": {
+        "role": "neutral",
+        "displayName": "Muted Sage",
+        "canonical": "oklch(53% 0.018 165)",
+        "tonalRamp": [
+          "oklch(16% 0.010 165)",
+          "oklch(26% 0.014 165)",
+          "oklch(38% 0.016 165)",
+          "oklch(48% 0.018 165)",
+          "oklch(53% 0.018 165)",
+          "oklch(68% 0.014 165)",
+          "oklch(82% 0.010 165)",
+          "oklch(94% 0.005 165)"
+        ]
+      },
+      "divider-dew": {
+        "role": "neutral",
+        "displayName": "Divider Dew",
+        "canonical": "oklch(92.5% 0.012 162)",
+        "tonalRamp": [
+          "oklch(25% 0.007 162)",
+          "oklch(40% 0.009 162)",
+          "oklch(55% 0.010 162)",
+          "oklch(70% 0.011 162)",
+          "oklch(82% 0.012 162)",
+          "oklch(88% 0.012 162)",
+          "oklch(92.5% 0.012 162)",
+          "oklch(97% 0.005 162)"
+        ]
+      },
+      "amber-warning": {
+        "role": "tertiary",
+        "displayName": "Amber Warning",
+        "canonical": "oklch(51% 0.135 54)",
+        "tonalRamp": [
+          "oklch(22% 0.06 54)",
+          "oklch(34% 0.09 54)",
+          "oklch(44% 0.12 54)",
+          "oklch(51% 0.135 54)",
+          "oklch(62% 0.13 54)",
+          "oklch(73% 0.10 54)",
+          "oklch(85% 0.06 54)",
+          "oklch(95% 0.025 54)"
+        ]
+      },
+      "danger-ember": {
+        "role": "tertiary",
+        "displayName": "Danger Ember",
+        "canonical": "oklch(52% 0.175 34)",
+        "tonalRamp": [
+          "oklch(20% 0.08 34)",
+          "oklch(32% 0.13 34)",
+          "oklch(44% 0.16 34)",
+          "oklch(52% 0.175 34)",
+          "oklch(63% 0.165 34)",
+          "oklch(74% 0.13 34)",
+          "oklch(86% 0.08 34)",
+          "oklch(95% 0.03 34)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Amount input field only. The number being entered to calculate the payment." },
+      "headline": { "displayName": "Headline", "purpose": "App title (ไทยช่วยไทยพลัส). Single use across the entire app." },
+      "title": { "displayName": "Title", "purpose": "Section card headings (h2). Weight contrast, not size inflation." },
+      "body": { "displayName": "Body", "purpose": "Hints, descriptions, pacing callouts, and general content text." },
+      "label": { "displayName": "Label", "purpose": "Timestamps, badge text, meter annotations, secondary helper copy." }
+    },
+    "shadows": [
+      {
+        "name": "surface-lift",
+        "value": "0 2px 14px rgba(16,60,40,.08)",
+        "purpose": "All card containers and the flip card. Green-tinted at near-zero opacity; lifts surfaces off the Page Mist background."
+      },
+      {
+        "name": "overlay-float",
+        "value": "0 8px 24px rgba(0,0,0,.25)",
+        "purpose": "Toast notification only. Stronger and untinted so the overlay reads above any surface at any scroll position."
+      },
+      {
+        "name": "cta-glow",
+        "value": "0 6px 16px rgba(26,127,90,.28)",
+        "purpose": "Pay button resting state. Reinforces the Thai Green brand color through shadow tinting."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out-snappy",
+        "value": "cubic-bezier(.34,1.18,.64,1)",
+        "purpose": "Progress bar fill transitions (0.7s). Slightly overshoots to give fills a satisfying landing."
+      },
+      {
+        "name": "ease-standard",
+        "value": "cubic-bezier(.4,0,.2,1)",
+        "purpose": "Default state transitions: border color changes, opacity fades, card flips."
+      },
+      {
+        "name": "duration-fast",
+        "value": "120ms",
+        "purpose": "Button and chip press states (scale, translateY)."
+      },
+      {
+        "name": "duration-standard",
+        "value": "250ms",
+        "purpose": "Toast slide-in/out. Card flip is 600ms."
+      },
+      {
+        "name": "duration-meter",
+        "value": "700ms",
+        "purpose": "Progress bar width transitions on new transaction."
+      }
+    ],
+    "breakpoints": [
+      { "name": "content-max", "value": "520px", "purpose": "Max width of the app content column. Above this, the layout centers with padding." }
+    ]
+  },
+  "components": [
+    {
+      "name": "Pay Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Full-width primary CTA. Confirms a payment and records the transaction.",
+      "html": "<button class=\"ds-btn-primary\">ยืนยันการจ่าย ฿333.33</button>",
+      "css": ".ds-btn-primary { display: block; width: 100%; border: none; border-radius: 14px; cursor: pointer; background: linear-gradient(135deg, #1a7f5a, #23a373); color: #fff; font-size: 1.1rem; font-weight: 800; font-family: 'IBM Plex Sans Thai', 'Noto Sans Thai', system-ui, sans-serif; padding: 16px; box-shadow: 0 6px 16px rgba(26,127,90,.28); transition: transform .12s, box-shadow .12s; } .ds-btn-primary:hover { box-shadow: 0 8px 20px rgba(26,127,90,.36); } .ds-btn-primary:active { transform: translateY(1px); box-shadow: 0 3px 10px rgba(26,127,90,.22); } .ds-btn-primary:disabled { background: #c2cdc7; box-shadow: none; cursor: not-allowed; } .ds-btn-primary:focus-visible { outline: 2px solid #1a7f5a; outline-offset: 3px; }"
+    },
+    {
+      "name": "Quick Amount Chip",
+      "kind": "chip",
+      "refersTo": "chip-default",
+      "description": "Shortcut amount selector. Row of 4: ฿50, ฿100, ฿200, and a full-day recommended amount.",
+      "html": "<div class=\"ds-chip-row\"><button class=\"ds-chip\">฿50</button><button class=\"ds-chip\">฿100</button><button class=\"ds-chip\">฿200</button><button class=\"ds-chip ds-chip-full\">ใช้เต็มวันนี้</button></div>",
+      "css": ".ds-chip-row { display: flex; gap: 8px; flex-wrap: wrap; } .ds-chip { flex: 1 1 auto; min-width: 64px; min-height: 44px; border: 1.5px solid #e3ebe6; background: #fff; color: #13241d; font-weight: 700; font-size: .9rem; font-family: 'IBM Plex Sans Thai', 'Noto Sans Thai', system-ui, sans-serif; padding: 10px 8px; border-radius: 12px; cursor: pointer; transition: transform .12s, border-color .12s; } .ds-chip:active { transform: scale(.97); } .ds-chip:focus-visible { outline: 2px solid #1a7f5a; outline-offset: 2px; } .ds-chip-full { border-color: #cfe9dc; background: #f0faf5; color: #0f5e41; } .ds-chip:disabled { opacity: .4; cursor: not-allowed; }"
+    },
+    {
+      "name": "Section Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Primary container for all major content sections. Floats off the Page Mist background via surface-lift shadow.",
+      "html": "<div class=\"ds-card\"><h2 class=\"ds-card-title\">สิทธิรัฐคงเหลือ</h2><p class=\"ds-card-body\">เนื้อหาภายในการ์ด</p></div>",
+      "css": ".ds-card { background: #fff; border-radius: 18px; box-shadow: 0 2px 14px rgba(16,60,40,.08); padding: 18px 16px; margin-bottom: 14px; } .ds-card-title { font-size: .95rem; margin: 0 0 12px; font-weight: 800; color: #13241d; font-family: 'IBM Plex Sans Thai', 'Noto Sans Thai', system-ui, sans-serif; } .ds-card-body { margin: 0; font-size: .87rem; font-weight: 600; color: #6b7d75; font-family: 'IBM Plex Sans Thai', 'Noto Sans Thai', system-ui, sans-serif; line-height: 1.5; }"
+    },
+    {
+      "name": "Amount Input",
+      "kind": "input",
+      "refersTo": "input-amount",
+      "description": "Primary numeric entry field. Oversized typography for quick glance-reading. Thai Baht symbol absolutely positioned left.",
+      "html": "<div class=\"ds-input-wrap\"><span class=\"ds-input-symbol\">฿</span><input class=\"ds-input-amount\" type=\"text\" inputmode=\"decimal\" placeholder=\"0\" /></div>",
+      "css": ".ds-input-wrap { position: relative; } .ds-input-symbol { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 1.6rem; font-weight: 800; color: #6b7d75; pointer-events: none; font-family: 'IBM Plex Sans Thai', 'Noto Sans Thai', system-ui, sans-serif; } .ds-input-amount { width: 100%; font-size: 2rem; font-weight: 800; font-family: 'IBM Plex Sans Thai', 'Noto Sans Thai', system-ui, sans-serif; padding: 14px 16px 14px 42px; border: 2px solid #e3ebe6; border-radius: 14px; background: #fbfdfc; color: #13241d; outline: none; transition: border-color .15s; min-height: 62px; } .ds-input-amount:focus { border-color: #1a7f5a; } .ds-input-amount::placeholder { color: #6b7d75; }"
+    },
+    {
+      "name": "Result Split",
+      "kind": "custom",
+      "refersTo": "result-box-gov",
+      "description": "Side-by-side gov-pays / user-pays display. The Two-Voice color contract made visible: green = government, blue = user.",
+      "html": "<div class=\"ds-result-split\"><div class=\"ds-result-box ds-result-gov\"><div class=\"ds-result-label\">รัฐช่วยจ่าย</div><div class=\"ds-result-value\">฿200</div></div><div class=\"ds-result-box ds-result-user\"><div class=\"ds-result-label\">คุณจ่าย</div><div class=\"ds-result-value\">฿133.33</div></div></div>",
+      "css": ".ds-result-split { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; } .ds-result-box { border-radius: 14px; padding: 14px; text-align: center; } .ds-result-label { font-size: .82rem; font-weight: 700; opacity: .9; font-family: 'IBM Plex Sans Thai', 'Noto Sans Thai', system-ui, sans-serif; } .ds-result-value { font-size: 1.7rem; font-weight: 800; margin-top: 3px; line-height: 1.1; font-family: 'IBM Plex Sans Thai', 'Noto Sans Thai', system-ui, sans-serif; } .ds-result-gov { background: #e9f7ef; color: #0f5e41; } .ds-result-user { background: #eaf0ff; color: #1e40af; }"
+    },
+    {
+      "name": "Status Badge",
+      "kind": "chip",
+      "refersTo": "badge-gov",
+      "description": "Header pill badges showing campaign status (green) and current month (indigo).",
+      "html": "<div class=\"ds-badge-row\"><span class=\"ds-badge ds-badge-gov\">เหลืออีก 118 วัน</span><span class=\"ds-badge ds-badge-month\">เดือน มิ.ย.</span></div>",
+      "css": ".ds-badge-row { display: flex; gap: 8px; flex-wrap: wrap; } .ds-badge { display: inline-block; font-size: .78rem; font-weight: 700; font-family: 'IBM Plex Sans Thai', 'Noto Sans Thai', system-ui, sans-serif; padding: 6px 11px; border-radius: 999px; border-width: 1px; border-style: solid; } .ds-badge-gov { background: #e8f5ee; color: #0f5e41; border-color: #cfe9dc; } .ds-badge-month { background: #eef2ff; color: #3730a3; border-color: #dbe1ff; }"
+    },
+    {
+      "name": "Progress Meter",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Subsidy remaining tracker. Fill color shifts from green (healthy) to amber to orange to red as the budget depletes. Shine animation loops on active fills.",
+      "html": "<div class=\"ds-meter\"><div class=\"ds-meter-top\"><span class=\"ds-meter-name\">เหลือวันนี้</span><span class=\"ds-meter-num\"><b>฿140</b> / ฿200</span></div><div class=\"ds-meter-track\"><div class=\"ds-meter-fill\" style=\"width:70%\"></div></div></div>",
+      "css": ".ds-meter { margin-bottom: 14px; } .ds-meter:last-child { margin-bottom: 0; } .ds-meter-top { display: flex; justify-content: space-between; align-items: baseline; font-size: .86rem; margin-bottom: 6px; font-family: 'IBM Plex Sans Thai', 'Noto Sans Thai', system-ui, sans-serif; } .ds-meter-name { font-weight: 700; color: #13241d; } .ds-meter-num { color: #6b7d75; font-weight: 600; } .ds-meter-num b { color: #13241d; font-weight: 800; } .ds-meter-track { height: 12px; background: #eef2f0; border-radius: 999px; overflow: hidden; } .ds-meter-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, #2bb37e, #1a7f5a); transition: width .7s cubic-bezier(.34,1.18,.64,1); } @media (prefers-reduced-motion: reduce) { .ds-meter-fill { transition: none; } }"
+    },
+    {
+      "name": "History Row",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Compact transaction log row. Fixed-width columns for time and amount; flex-1 split annotation; delete button right-aligned.",
+      "html": "<div class=\"ds-hist-row\"><span class=\"ds-hist-time\">14:23</span><span class=\"ds-hist-amt\">฿333.33</span><span class=\"ds-hist-split\"><span class=\"ds-hist-gov\">รัฐ ฿200</span> · <span class=\"ds-hist-user\">คุณ ฿133.33</span></span><button class=\"ds-hist-del\">ลบ</button></div>",
+      "css": ".ds-hist-row { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid #f1f5f3; font-family: 'IBM Plex Sans Thai', 'Noto Sans Thai', system-ui, sans-serif; } .ds-hist-row:last-child { border-bottom: none; } .ds-hist-time { font-size: .78rem; color: #6b7d75; width: 46px; flex: none; } .ds-hist-amt { font-weight: 800; font-size: .9rem; width: 74px; flex: none; color: #13241d; } .ds-hist-split { font-size: .78rem; color: #6b7d75; flex: 1; } .ds-hist-gov { color: #0f5e41; font-weight: 700; } .ds-hist-user { color: #1e40af; font-weight: 700; } .ds-hist-del { border: none; background: #fef2f2; color: #c2410c; font-weight: 700; font-size: .8rem; padding: 7px 11px; border-radius: 9px; cursor: pointer; flex: none; min-height: 34px; transition: opacity .12s; } .ds-hist-del:active { opacity: .75; } .ds-hist-del:focus-visible { outline: 2px solid #c2410c; outline-offset: 2px; }"
+    },
+    {
+      "name": "Toast Notification",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Bottom-center ephemeral confirmation. Slides up and fades in; auto-dismisses after 2.2s.",
+      "html": "<div class=\"ds-toast ds-toast-show\">บันทึกแล้ว • รัฐช่วย ฿200</div>",
+      "css": ".ds-toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(20px); background: #13241d; color: #fff; font-weight: 700; font-size: .92rem; font-family: 'IBM Plex Sans Thai', 'Noto Sans Thai', system-ui, sans-serif; padding: 12px 20px; border-radius: 999px; box-shadow: 0 8px 24px rgba(0,0,0,.25); opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s; z-index: 50; max-width: 90vw; text-align: center; } .ds-toast-show { opacity: 1; transform: translateX(-50%) translateY(0); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Pocket Cashier",
+    "overview": "This system is built for a specific moment: phone in one hand, items on the counter, needing one number fast. The design eliminates everything between the user's question (\"how much do I actually pay?\") and the answer. Warmth comes from color, not decoration. Precision comes from typography, not density.\n\nThe palette speaks in two voices: Thai Green holds government money (confidence, civic trust, the reassuring green of official approval), Trust Blue holds the user's own contribution (personal, actionable, distinct). Neither voice competes. Neutral surfaces — the barely-there Page Mist background, clean white cards — recede completely so numbers read first.\n\nThis system explicitly rejects the bureaucratic density of Thai government portals, the cartoon casualness that would undermine financial trust, and the generic Western fintech gloss of frosted cards and abstract gradients. It is a Thai tool, used by Thai people, on Thai phones.",
+    "keyCharacteristics": [
+      "Number-first hierarchy: monetary values always read at headline scale, labels recede",
+      "Two-voice semantic color: green = government benefit, blue = user's cost; never decorative",
+      "Thai-native font stack, no Latin primary; legible at 0.78rem on older phones",
+      "Broadly rounded containers (18px cards) that feel native to mobile, not web-ported",
+      "Single-layer shadow vocabulary: cards float off the background, everything else stays flat",
+      "Full prefers-reduced-motion support throughout; animation is an enhancement, not a requirement"
+    ],
+    "rules": [
+      {
+        "name": "The Two-Voice Rule",
+        "body": "Green = government money. Blue = your money. No element switches voices. If a number is green, it belongs to the subsidy. If it is blue, it comes out of your pocket. This semantic contract cannot be violated without confusing the user about who is paying what.",
+        "section": "colors"
+      },
+      {
+        "name": "The Semantic-Only Rule",
+        "body": "Color in this system communicates meaning, not mood. No green gradients on neutral UI elements, no blue accents on non-user content. If the color has no semantic reason to be there, it should not be there.",
+        "section": "colors"
+      },
+      {
+        "name": "The Weight-First Rule",
+        "body": "Hierarchy is established through font weight (800 vs. 700 vs. 600), not through size variance. Most of the UI sits between 0.78rem and 0.95rem — a compressed range by design. Never inflate sizes to establish hierarchy; reach for weight first.",
+        "section": "typography"
+      },
+      {
+        "name": "The Number Rule",
+        "body": "Monetary values always appear at a larger size and heavier weight than their associated label. The value is the answer. The label is context. If they look the same size, the hierarchy is broken.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat-By-Default Rule",
+        "body": "Every surface starts flat. Shadow is applied exactly where a card boundary must be perceptible against the Page Mist background. Inputs, buttons, chips, badges, and result boxes are all flat. The shadow exists because cards need it; not as an ambient atmosphere or a style statement.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do use Thai Green exclusively for government subsidy data: gov amounts, gov result boxes, progress bars, the primary CTA, and the logo.",
+      "Do use Trust Blue exclusively for user-pays data: user amounts, user result boxes, history split labels.",
+      "Do maintain the Thai-first font stack ('Sukhumvit Set', 'IBM Plex Sans Thai', 'Noto Sans Thai'). Never replace with a Latin-primary or decorative display font.",
+      "Do keep card shadows at '0 2px 14px rgba(16,60,40,.08)' exactly. The green tint is intentional; a neutral grey shadow breaks coherence.",
+      "Do use weight 800 for all monetary values regardless of size. The number must always feel heavier than its label.",
+      "Do ensure all tap targets are minimum 44px in height: buttons, chips, delete controls, and navigation elements.",
+      "Do preserve every prefers-reduced-motion guard in the codebase. These protect users; never remove them when adding new animation.",
+      "Do use 14px or 18px radius for interactive containers (inputs, buttons, cards). Tighter radii feel web-page; broader radii feel native."
+    ],
+    "donts": [
+      "Don't use cartoon or playful aesthetics: rounded mascot illustrations, bright emoji-heavy layouts, oversized icon characters. This app tracks real money and must earn financial trust.",
+      "Don't apply Western fintech gloss: frosted glass (backdrop-filter: blur), abstract layered gradients, heavy dark-mode drama, glassmorphism as default.",
+      "Don't reproduce Thai government portal density: walls of regulatory text, multi-column bureaucratic layouts, formal header bars with official crests or seals.",
+      "Don't use generic SaaS dashboard patterns: sidebar navigation, hero metric card templates, identical card grids, gradient text (background-clip: text).",
+      "Don't use border-left or border-right greater than 1px as a colored accent stripe on cards, list items, or callouts. Use background tints, full borders, or nothing.",
+      "Don't switch color semantics. A blue element cannot represent government data. A green element cannot represent the user's personal cost.",
+      "Don't add shadow depth beyond the defined vocabulary. No blur-heavy multi-layer shadows, no box-shadow stacking, no hover shadows on flat elements.",
+      "Don't create new surfaces using pure #fff without the Page Mist context. New additions should use a tinted near-white (oklch 97-99%, chroma 0.005-0.01 at hue 162).",
+      "Don't shrink monetary values below Title scale (0.95rem / 800 weight) regardless of space constraints. If space is tight, reduce the label, not the number."
+    ]
+  }
+}
